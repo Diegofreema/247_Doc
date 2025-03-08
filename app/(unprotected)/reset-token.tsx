@@ -35,7 +35,9 @@ const ResetToken = () => {
       setValue('');
       return;
     }
-    toast.success('Success');
+    toast.success('Success', {
+      description: 'Token matches',
+    });
     otpRef.current?.clear();
     setValue('');
     router.replace(`/reset-password?id=${id}&email=${email}`);

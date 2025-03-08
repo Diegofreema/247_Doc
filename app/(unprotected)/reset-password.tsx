@@ -45,8 +45,8 @@ const ResetPassword = () => {
 `
       );
       console.log(data?.result);
-      if (data?.result) {
-        toast.success('Please login in', {
+      if (data?.result === 'updated') {
+        toast.success('Please kindly login', {
           description: 'Password reset successful',
         });
       }
@@ -107,6 +107,7 @@ const ResetPassword = () => {
 
             <Button
               loading={isSubmitting}
+              disabled={isSubmitting}
               onPress={handleSubmit(onSubmit)}
               text="Reset"
             />
