@@ -1,9 +1,9 @@
-import {colors} from '@/constants/Colors';
-import {mapLayoutPropsToStyle} from '@/lib/utils';
-import {UtilityProps} from '@/types';
+import { colors } from '@/constants/Colors';
+import { mapLayoutPropsToStyle } from '@/lib/utils';
+import { UtilityProps } from '@/types';
 import React from 'react';
-import {Pressable, Text} from 'react-native';
-import {Icon} from '@tabler/icons-react-native';
+import { ActivityIndicator, Pressable, Text } from 'react-native';
+import { Icon } from '@tabler/icons-react-native';
 
 export const Button = ({
   backgroundColor = colors.textGreen,
@@ -12,7 +12,7 @@ export const Button = ({
   loading,
   text,
   icon: CustomIcon,
-    height = 50,
+  height = 50,
   onPress,
   ...props
 }: UtilityProps & {
@@ -23,12 +23,13 @@ export const Button = ({
   loading?: boolean;
   onPress: () => void;
 }) => {
+  const reduceOpacity = disabled || loading;
   return (
     <Pressable
       onPress={onPress}
-      disabled={disabled || loading}
+      disabled={reduceOpacity}
       style={({ pressed }) => [
-        { opacity: pressed ? 0.5 : 1, },
+        { opacity: pressed || reduceOpacity ? 0.5 : 1 },
         mapLayoutPropsToStyle({
           px: 10,
           py: 5,
@@ -41,7 +42,7 @@ export const Button = ({
         }),
       ]}
     >
-      {CustomIcon && (
+      {CustomIcon && !loading && (
         <CustomIcon
           color={color}
           size={20}
@@ -50,11 +51,12 @@ export const Button = ({
           }}
         />
       )}
-      {text && (
+      {text && !loading && (
         <Text style={{ color: color, fontFamily: 'PoppinsMedium' }}>
           {text}
         </Text>
       )}
+      {loading && <ActivityIndicator color={'white'} />}
     </Pressable>
   );
 };

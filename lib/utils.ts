@@ -28,7 +28,7 @@ export const mapLayoutPropsToStyle = (
     my,
     px,
     py,
-      height
+    height,
   } = props;
 
   return {
@@ -57,4 +57,12 @@ export const mapLayoutPropsToStyle = (
     width,
     height,
   };
+};
+
+export const generateFiveRandomNumber = () => {
+  let token = '';
+  for (let i = 0; i < 5; i++) {
+    token += Math.floor(Math.random() * 10);
+  }
+  return token;
 };

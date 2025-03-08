@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { forgotSchema } from '@/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { api } from '@/lib/utils';
+import { api, generateFiveRandomNumber } from '@/lib/utils';
 import { toast } from 'sonner-native';
 import { CustomInput } from '@/components/form/CustomInput';
 
@@ -30,32 +30,30 @@ const Forget = () => {
   });
 
   const onSubmit = async (value: z.infer<typeof forgotSchema>) => {
+    const token = generateFiveRandomNumber();
     try {
       const { data } = await axios.post(
-        `${api}?api=recoverpassword&patientemail=${value.email.toLowerCase()}`
+        `${api}?api=reset247docpassword&patientemail=${value.email}&passcode=${token}`
       );
 
       console.log(data.result);
 
-      if (data === "{'result': 'failed'}") {
-        toast.error('Please try again', {
-          description: 'Something went wrong',
-        });
-
-        return;
-      }
-      if (data.result === 'This Email is not registered') {
+      if (data.result === 'invalid email') {
         toast.error('Please try again try a different email', {
           description: 'This Email is not found',
         });
+
         return;
       }
 
-      if (data.result === 'sent') {
-        toast.success('Please check your email');
+      if (data.result) {
+        toast.success('Please check your email', {
+          description: 'We sent you a 5 digit token',
+        });
+        router.push(
+          `/reset-token?token=${token}&email=${value.email}&id=${data.result}`
+        );
       }
-
-      router.back();
     } catch (error) {
       console.log(error);
       toast.error('Please try again', {

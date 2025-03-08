@@ -7275,6 +7275,11 @@ react-native-is-edge-to-edge@^1.1.6:
   resolved "https://registry.yarnpkg.com/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.1.6.tgz#69ec13f70d76e9245e275eed4140d0873a78f902"
   integrity sha512-1pHnFTlBahins6UAajXUqeCOHew9l9C2C8tErnpGC3IyLJzvxD+TpYAixnCbrVS52f7+NvMttbiSI290XfwN0w==
 
+react-native-otp-entry@^1.8.3:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/react-native-otp-entry/-/react-native-otp-entry-1.8.3.tgz#64f26cf83d3b90f9f068b8ca05aaf4b8d56b8886"
+  integrity sha512-cpEXmbaBkMEeQNGeGL54T9RAtHWVggddNgpg9hLr9/5bCL2S/voO3J+60TPfsHk3cmI9+rMxTNH3jbNnhpmZZA==
+
 react-native-paystack-webview@^4.6.7:
   version "4.6.7"
   resolved "https://registry.yarnpkg.com/react-native-paystack-webview/-/react-native-paystack-webview-4.6.7.tgz#7dc85cc1df2915f9b31b749ed6023a4d3509d6ec"

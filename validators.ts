@@ -49,3 +49,17 @@ export const signUpSchema = z
     message: 'Passwords must match',
     path: ['confirmPassword'],
   });
+export const newPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .regex(
+        passwordRegExp,
+        'Password must include at least one capital letter, one number, one lower case letter, and one special character'
+      ),
+    confirmPassword: z.string().min(1, 'Confirm Password is required'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords must match',
+    path: ['confirmPassword'],
+  });
