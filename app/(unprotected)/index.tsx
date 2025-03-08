@@ -6,7 +6,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import React, { useState } from 'react';
-import { useRouter } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 import { useAuth } from '@/lib/zustand/auth';
 import axios from 'axios';
 import { toast } from 'sonner-native';
@@ -22,10 +22,12 @@ import { BoldHeader } from '@/components/ui/BoldHeader';
 import { LoadingComponent } from '@/components/Modal/LoadingComponent';
 import { api } from '@/lib/utils';
 import { CustomInput } from '@/components/form/CustomInput';
+import { useFirst } from '@/lib/zustand/useFirst';
 const Login = () => {
   const router = useRouter();
   const [secured, setSecured] = useState(true);
   const toggleSecure = () => setSecured((prev) => !prev);
+  const isFirst = useFirst((state) => state.isFirst);
   const { setId } = useAuth();
   const { width } = useWindowDimensions();
   const {
@@ -79,6 +81,9 @@ const Login = () => {
   };
 
   const isIPad = width > 500;
+  if (isFirst) {
+    return <Redirect href="/onboard" />;
+  }
   return (
     <>
       <LoadingComponent isLoading={isSubmitting} />

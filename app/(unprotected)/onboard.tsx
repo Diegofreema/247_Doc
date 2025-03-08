@@ -1,15 +1,24 @@
-import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
-import {Image} from 'expo-image';
-import {Container} from '@/components/Container';
-import {colors} from '@/constants/Colors';
+import { Container } from '@/components/Container';
+import { colors } from '@/constants/Colors';
+import { Image } from 'expo-image';
+import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import {Link, useRouter} from 'expo-router';
-import Animated, {FadeIn, runOnJS, SlideInRight,} from 'react-native-reanimated';
-import {Directions, Gesture, GestureDetector,} from 'react-native-gesture-handler';
-import {HStack} from '@/components/ui/HStack';
-import {Button} from '@/components/ui/Button';
-import {IconArrowRight} from '@tabler/icons-react-native';
+import { Button } from '@/components/ui/Button';
+import { HStack } from '@/components/ui/HStack';
+import { useFirst } from '@/lib/zustand/useFirst';
+import { IconArrowRight } from '@tabler/icons-react-native';
+import { useRouter } from 'expo-router';
+import {
+  Directions,
+  Gesture,
+  GestureDetector,
+} from 'react-native-gesture-handler';
+import Animated, {
+  FadeIn,
+  runOnJS,
+  SlideInRight,
+} from 'react-native-reanimated';
 
 const onBoardData = [
   {
@@ -34,7 +43,7 @@ const onBoardData = [
 
 const Onboard = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const setIsFirst = useFirst((state) => state.setIsFirst);
   const router = useRouter();
   const data = onBoardData[currentIndex];
 
@@ -48,6 +57,7 @@ const Onboard = () => {
     if (currentIndex < onBoardData.length - 1) {
       setCurrentIndex((prev) => prev + 1);
     } else {
+      setIsFirst();
       router.replace('/');
     }
   };
@@ -64,7 +74,10 @@ const Onboard = () => {
         runOnJS(onNext)();
       })
   );
-
+  const onSkip = () => {
+    setIsFirst();
+    router.replace('/');
+  };
   const animation = SlideInRight;
   return (
     <GestureDetector gesture={swipe}>
@@ -89,9 +102,9 @@ const Onboard = () => {
           </View>
         </Animated.View>
         <HStack justifyContent="space-between" alignItems="center">
-          <Link href={'/'} replace style={styles.skip}>
-            Skip
-          </Link>
+          <TouchableOpacity onPress={onSkip}>
+            <Text style={styles.skip}>Skip</Text>
+          </TouchableOpacity>
           <HStack gap={5}>
             {onBoardData.map((_, index) => (
               <View

@@ -122,7 +122,7 @@ const SignUp = () => {
   //   setValues({ ...values, dateOfBirth: format(date, 'yyyy-MM-dd') });
   // };
   const onPress = () => {
-    router.replace('/onboard');
+    router.replace('/');
     setShowModal(false);
     reset();
   };
