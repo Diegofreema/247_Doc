@@ -15,9 +15,9 @@ type Props = {
 };
 
 export const MenuComponent = ({ onOpen }: Props) => {
-  const { clearId } = useAuth();
+  const { clearUser } = useAuth();
   const logOut = () => {
-    clearId();
+    clearUser();
     router.replace('/');
   };
   const deleteFn = () => {

@@ -1,31 +1,31 @@
-import { Image } from "expo-image";
+import { Image } from 'expo-image';
 import {
   Pressable,
   RefreshControl,
   ScrollView,
   useWindowDimensions,
   View,
-} from "react-native";
+} from 'react-native';
 
-import { FontAwesome } from "@expo/vector-icons";
-import { colors } from "@/constants/Colors";
-import { SeeAll } from "./SeeAll";
-import { useRouter } from "expo-router";
-import { useComingSessions } from "@/lib/tanstack/queries";
-import { useAuth } from "@/lib/zustand/auth";
+import { FontAwesome } from '@expo/vector-icons';
+import { colors } from '@/constants/Colors';
+import { SeeAll } from './SeeAll';
+import { useRouter } from 'expo-router';
+import { useComingSessions } from '@/lib/tanstack/queries';
+import { useAuth } from '@/lib/zustand/auth';
 
-import { UpComingSessions } from "@/types";
-import * as Linking from "expo-linking";
-import { ErrorComponent } from "@/components/ui/ErrorComponent";
-import { Loading } from "@/components/ui/Loading";
-import { VStack } from "@/components/ui/Vstack";
-import { HStack } from "@/components/ui/HStack";
-import { MyText } from "@/components/ui/MyText";
+import { UpComingSessions } from '@/types';
+import * as Linking from 'expo-linking';
+import { ErrorComponent } from '@/components/ui/ErrorComponent';
+import { Loading } from '@/components/ui/Loading';
+import { VStack } from '@/components/ui/Vstack';
+import { HStack } from '@/components/ui/HStack';
+import { MyText } from '@/components/ui/MyText';
 
 export const AppointmentCard = (): JSX.Element => {
-  const { id } = useAuth();
+  const { user } = useAuth();
   const { data, isPending, refetch, isError, isPaused, isRefetching } =
-    useComingSessions(id);
+    useComingSessions(user?.ref!);
 
   const router = useRouter();
   if (isError || isPaused) {
@@ -41,8 +41,8 @@ export const AppointmentCard = (): JSX.Element => {
       <View style={{ paddingRight: 20 }}>
         <SeeAll
           text="Appointments"
-          onPress={() => router.push("/two")}
-          subText={hasAppointments ? "See all" : ""}
+          onPress={() => router.push('/two')}
+          subText={hasAppointments ? 'See all' : ''}
         />
       </View>
 
@@ -57,7 +57,7 @@ export const AppointmentCard = (): JSX.Element => {
         contentContainerStyle={{
           paddingVertical: 20,
           paddingRight: 10,
-          backgroundColor: "transparent",
+          backgroundColor: 'transparent',
           gap: 10,
         }}
       >
@@ -88,7 +88,7 @@ const AppointmentCardsItem = ({ item }: { item: UpComingSessions }) => {
         <VStack>
           <MyText
             text={item?.doctorName}
-            style={{ fontSize: 18, color: "white", fontFamily: "PoppinsBold" }}
+            style={{ fontSize: 18, color: 'white', fontFamily: 'PoppinsBold' }}
           />
           {/* <MyText
             text={item?.doctorEmail}
@@ -120,14 +120,14 @@ const AppointmentCardsItem = ({ item }: { item: UpComingSessions }) => {
           <FontAwesome name="calendar" color="white" size={13} />
           <MyText
             text={item?.date}
-            style={{ fontSize: 10, color: "white", fontFamily: "Poppins" }}
+            style={{ fontSize: 10, color: 'white', fontFamily: 'Poppins' }}
           />
         </HStack>
         <HStack gap={5} alignItems="center">
           <FontAwesome name="clock-o" color="white" size={13} />
           <MyText
             text={item?.sessionStartTimex}
-            style={{ fontSize: 10, color: "white", fontFamily: "Poppins" }}
+            style={{ fontSize: 10, color: 'white', fontFamily: 'Poppins' }}
           />
         </HStack>
         <Pressable
@@ -142,11 +142,11 @@ const AppointmentCardsItem = ({ item }: { item: UpComingSessions }) => {
           ]}
         >
           <MyText
-            text={"Meeting link"}
+            text={'Meeting link'}
             style={{
               fontSize: 10,
-              color: "white",
-              fontFamily: "PoppinsBold",
+              color: 'white',
+              fontFamily: 'PoppinsBold',
             }}
           />
         </Pressable>
@@ -171,8 +171,8 @@ const ListEmptyComponent = () => {
 appointment at the moment"
             style={{
               fontSize: 13,
-              color: "white",
-              fontFamily: "PoppinsMedium",
+              color: 'white',
+              fontFamily: 'PoppinsMedium',
             }}
           />
           <Pressable>
@@ -189,8 +189,8 @@ appointment at the moment"
                 text="Book an Appointment"
                 style={{
                   fontSize: 13,
-                  color: "white",
-                  fontFamily: "Poppins",
+                  color: 'white',
+                  fontFamily: 'Poppins',
                 }}
               />
             </HStack>
@@ -198,7 +198,7 @@ appointment at the moment"
         </VStack>
 
         <Image
-          source={require("@/assets/images/empty.png")}
+          source={require('@/assets/images/empty.png')}
           style={{ width: 100, height: 100 }}
           contentFit="contain"
         />

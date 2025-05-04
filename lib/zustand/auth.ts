@@ -2,23 +2,30 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+type User = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  tel: string;
+  ref: string;
+};
 type Props = {
-  id: string;
-  setId: (id: string) => void;
-  clearId: () => void;
+  user: User | null;
+  setUser: (user: User) => void;
+  clearUser: () => void;
 };
 
 export const useAuth = create<Props>()(
   persist(
     (set) => ({
-      id: '',
-      setId: (id: string) => {
-        set({ id: id });
+      user: null,
+      setUser: (value) => {
+        set({ user: value });
       },
-      clearId: async () => {
-        set({ id: '' });
+      clearUser: async () => {
+        set({ user: null });
       },
     }),
-    { name: 'id', storage: createJSONStorage(() => AsyncStorage) }
+    { name: 'user', storage: createJSONStorage(() => AsyncStorage) }
   )
 );

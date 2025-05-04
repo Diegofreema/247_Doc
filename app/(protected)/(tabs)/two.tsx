@@ -1,15 +1,15 @@
-import { FlatList, useWindowDimensions, View } from "react-native";
-import { useComingSessions } from "@/lib/tanstack/queries";
-import { useAuth } from "@/lib/zustand/auth";
-import { ErrorComponent } from "@/components/ui/ErrorComponent";
-import { Loading } from "@/components/ui/Loading";
-import { HStack } from "@/components/ui/HStack";
-import { MyText } from "@/components/ui/MyText";
-import { ListEmptyComponent } from "@/components/two/ListEmptyComponent";
-import { AppointmentCardsItem } from "@/components/two/AppointmentCardItem";
+import { FlatList, useWindowDimensions, View } from 'react-native';
+import { useComingSessions } from '@/lib/tanstack/queries';
+import { useAuth } from '@/lib/zustand/auth';
+import { ErrorComponent } from '@/components/ui/ErrorComponent';
+import { Loading } from '@/components/ui/Loading';
+import { HStack } from '@/components/ui/HStack';
+import { MyText } from '@/components/ui/MyText';
+import { ListEmptyComponent } from '@/components/two/ListEmptyComponent';
+import { AppointmentCardsItem } from '@/components/two/AppointmentCardItem';
 
 const Appointment = () => {
-  const { id } = useAuth();
+  const { user } = useAuth();
   const { width } = useWindowDimensions();
   const isIPad = width > 500;
   const {
@@ -20,7 +20,7 @@ const Appointment = () => {
     isPaused,
     isRefetching,
     isRefetchError,
-  } = useComingSessions(id);
+  } = useComingSessions(user?.ref!);
 
   if (isError || isPaused || isRefetchError) {
     return <ErrorComponent retry={refetch} />;
@@ -40,8 +40,8 @@ const Appointment = () => {
             text="Appointments"
             style={{
               fontSize: 20,
-              color: "black",
-              fontFamily: "PoppinsBold",
+              color: 'black',
+              fontFamily: 'PoppinsBold',
             }}
           />
         </HStack>
@@ -53,13 +53,13 @@ const Appointment = () => {
       contentContainerStyle={{
         paddingVertical: 20,
         paddingHorizontal: 15,
-        backgroundColor: "transparent",
+        backgroundColor: 'transparent',
         flexGrow: 1,
-        width: isIPad ? "90%" : "100%",
-        marginHorizontal: "auto",
+        width: isIPad ? '90%' : '100%',
+        marginHorizontal: 'auto',
         gap: 20,
       }}
-      style={{ backgroundColor: "white" }}
+      style={{ backgroundColor: 'white' }}
       ListEmptyComponent={() => <ListEmptyComponent />}
       numColumns={isIPad ? 2 : 1}
       columnWrapperStyle={isIPad ? { gap: 20 } : null}

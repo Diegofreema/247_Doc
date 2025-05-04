@@ -1,23 +1,24 @@
-import {useDoctor} from '@/lib/tanstack/queries';
-import {useLocalSearchParams} from 'expo-router';
-import React, {useRef, useState} from 'react';
-import {useWindowDimensions, View} from 'react-native';
+import { useDoctor } from '@/lib/tanstack/queries';
+import { useLocalSearchParams } from 'expo-router';
+import React, { useRef, useState } from 'react';
+import { useWindowDimensions, View } from 'react-native';
 
-import {useAuth} from '@/lib/zustand/auth';
+import { useAuth } from '@/lib/zustand/auth';
 import axios from 'axios';
-import {paystackProps} from 'react-native-paystack-webview';
+import { paystackProps } from 'react-native-paystack-webview';
 
-import {Button} from '@/components/ui/Button';
-import {ErrorComponent} from '@/components/ui/ErrorComponent';
-import {Loading} from '@/components/ui/Loading';
-import {MyText} from '@/components/ui/MyText';
-import {NavHeader} from '@/components/ui/NavHeader';
-import {Payment} from '@/components/ui/Payment';
-import {VStack} from '@/components/ui/Vstack';
-import {useQueryClient} from '@tanstack/react-query';
-import {toast} from 'sonner-native';
-import {BookedSession} from '@/components/ui/BookedSession';
-import {DoctorCard} from '@/components/ui/DoctorCard';
+import { Button } from '@/components/ui/Button';
+import { ErrorComponent } from '@/components/ui/ErrorComponent';
+import { Loading } from '@/components/ui/Loading';
+import { MyText } from '@/components/ui/MyText';
+import { NavHeader } from '@/components/ui/NavHeader';
+import { Payment } from '@/components/ui/Payment';
+import { VStack } from '@/components/ui/Vstack';
+import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner-native';
+import { BookedSession } from '@/components/ui/BookedSession';
+import { DoctorCard } from '@/components/ui/DoctorCard';
+import { goToWebsite } from '@/lib/utils';
 
 const DoctorDetails = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -27,7 +28,7 @@ const DoctorDetails = () => {
   const [sessionFee, setSessionFee] = useState('');
   const [paymentRef, setPaymentRef] = useState('');
   const queryClient = useQueryClient();
-  const { id: userId } = useAuth();
+  const { user } = useAuth();
   const { data, isPending, refetch, isError, isPaused } = useDoctor(
     id as string
   );
@@ -40,7 +41,7 @@ const DoctorDetails = () => {
   }
   const onInvalidate = () => {
     queryClient.invalidateQueries({
-      queryKey: ['upcoming_sessions', userId],
+      queryKey: ['upcoming_sessions', user?.ref],
     });
   };
   if (
@@ -53,7 +54,7 @@ const DoctorDetails = () => {
   const onStartTransaction = async () => {
     try {
       const { data: dataRes } = await axios.post(
-        `https://247docapi.netpro.software/api.aspx?api=book&sessionid=${id}&patientref=${userId}`
+        `https://247docapi.netpro.software/api.aspx?api=book&sessionid=${id}&patientref=${user?.ref}`
       );
 
       if (
@@ -71,7 +72,13 @@ const DoctorDetails = () => {
         setSessionFee(dataRes.sessionFee);
         setPaymentRef(dataRes.paymentRef);
         setEmail(dataRes.email);
-        paystackWebViewRef?.current?.startTransaction();
+        await goToWebsite({
+          amount: sessionFee,
+          email: user?.email!,
+          ref: dataRes.paymentRef,
+          name: user?.firstName + ' ' + user?.lastName,
+          phoneNumber: user?.tel!,
+        });
       }
     } catch (error) {
       console.log(error);

@@ -5,9 +5,9 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 const queryClient = new QueryClient();
 const Layout = () => {
-  const { id } = useAuth();
+  const { user } = useAuth();
 
-  if (!id) {
+  if (!user) {
     return <Redirect href="/" />;
   }
   return (

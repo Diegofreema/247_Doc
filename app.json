@@ -2,7 +2,7 @@
   "expo": {
     "name": "247 Doc",
     "slug": "247doc",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "doc.netpro",
@@ -11,7 +11,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.diegodark.247doc",
-      "runtimeVersion": "1.0.8",
+      "runtimeVersion": "1.0.9",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -22,9 +22,10 @@
         "backgroundColor": "#ffffff"
       },
       "package": "acgcvv_chcvd_a5657_agasg.t",
-      "runtimeVersion": "1.0.8",
-      "versionCode": 8
+      "runtimeVersion": "1.0.9",
+      "versionCode": 9
     },
+
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -35,7 +36,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/icon.png",
+          "image": "./assets/images/splash.png",
           "imageWidth": 200,
           "resizeMode": "cover",
           "backgroundColor": "#ffffff"

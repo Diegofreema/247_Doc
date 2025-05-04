@@ -28,7 +28,7 @@ const Login = () => {
   const [secured, setSecured] = useState(true);
   const toggleSecure = () => setSecured((prev) => !prev);
   const isFirst = useFirst((state) => state.isFirst);
-  const { setId } = useAuth();
+  const { setUser } = useAuth();
   const { width } = useWindowDimensions();
   const {
     handleSubmit,
@@ -50,7 +50,7 @@ const Login = () => {
       const { data } = await axios.post(
         `${api}?api=signin&patientemail=${values.email.toLowerCase()}&pasword1=${formattedPassword}`
       );
-      console.log(data?.result);
+
       if (data?.result === 'incorrect credentials') {
         toast.error('Please try again', {
           description: 'Incorrect credentials',
@@ -66,7 +66,13 @@ const Login = () => {
       toast.success('Success', {
         description: 'Welcome back',
       });
-      setId(data?.result);
+      setUser({
+        email: data.email,
+        firstName: data.fname,
+        lastName: data.lname,
+        ref: data.ref,
+        tel: data.tel,
+      });
       router.push('/home');
     } catch (error) {
       console.log(error);
@@ -113,7 +119,7 @@ const Login = () => {
               control={control}
               errors={errors}
               name="email"
-              placeholder="Johndoe@gmail.com"
+              placeholder="visual@gmail.com"
               label="Email"
               type="email-address"
             />

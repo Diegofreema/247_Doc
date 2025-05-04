@@ -1,12 +1,12 @@
 import React from 'react';
-import {Redirect, Stack} from 'expo-router';
-import {StatusBar} from 'expo-status-bar';
-import {useAuth} from '@/lib/zustand/auth';
+import { Redirect, Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { useAuth } from '@/lib/zustand/auth';
 
 const AuthLayout = () => {
-  const { id } = useAuth();
+  const { user } = useAuth();
 
-  if (id) {
+  if (user) {
     return <Redirect href="/home" />;
   }
 

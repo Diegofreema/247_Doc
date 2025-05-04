@@ -7,17 +7,17 @@ import { api } from '../utils';
 import { toast } from 'sonner-native';
 
 export const useDeleteProfile = () => {
-  const { clearId, id } = useAuth();
+  const { clearUser, user } = useAuth();
   const router = useRouter();
   return useMutation({
     mutationFn: async () => {
       const { data } = await axios.post(
-        `${api}?api=deleteaccount&patientref=${id}`
+        `${api}?api=deleteaccount&patientref=${user?.ref}`
       );
       return data;
     },
     onSuccess: () => {
-      clearId();
+      clearUser();
       router.push('/');
       toast.success('Hate to see you leave 😔', {
         description: 'Profile Deleted Successfully',
