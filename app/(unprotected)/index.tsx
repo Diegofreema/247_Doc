@@ -91,82 +91,79 @@ const Login = () => {
     return <Redirect href="/onboard" />;
   }
   return (
-    <>
-      <LoadingComponent isLoading={isSubmitting} />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{ flex: 1, backgroundColor: 'white' }}
-        contentContainerStyle={{
-          flexGrow: 1,
-          paddingBottom: 20,
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{ flex: 1, backgroundColor: 'white' }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingBottom: 20,
+      }}
+    >
+      <Container
+        style={{
+          width: isIPad ? '80%' : '100%',
+          marginHorizontal: 'auto',
         }}
       >
-        <Container
-          style={{
-            width: isIPad ? '80%' : '100%',
-            marginHorizontal: 'auto',
-          }}
-        >
-          <VStack mt={30}>
-            <BoldHeader
-              text="Sign in"
-              subText="Enter your Login details on to continue"
-            />
-          </VStack>
+        <VStack mt={30}>
+          <BoldHeader
+            text="Sign in"
+            subText="Enter your Login details on to continue"
+          />
+        </VStack>
 
-          <VStack mt={40} gap={25}>
-            <CustomInput
-              control={control}
-              errors={errors}
-              name="email"
-              placeholder="visual@gmail.com"
-              label="Email"
-              type="email-address"
-            />
+        <VStack mt={40} gap={25}>
+          <CustomInput
+            control={control}
+            errors={errors}
+            name="email"
+            placeholder="visual@gmail.com"
+            label="Email"
+            type="email-address"
+          />
 
-            <CustomInput
-              control={control}
-              errors={errors}
-              name="password"
-              placeholder="********"
-              label="Password"
-              password
-              secureTextEntry={secured}
-              toggleSecure={toggleSecure}
-            />
+          <CustomInput
+            control={control}
+            errors={errors}
+            name="password"
+            placeholder="********"
+            label="Password"
+            password
+            secureTextEntry={secured}
+            toggleSecure={toggleSecure}
+          />
 
-            <Pressable
-              onPress={() => router.push('/forgot')}
-              style={({ pressed }) => [
-                styles.textContainer,
-                { opacity: pressed ? 0.5 : 1 },
-              ]}
-            >
-              <Text style={styles.text}>Forgot password</Text>
-            </Pressable>
+          <Pressable
+            onPress={() => router.push('/forgot')}
+            style={({ pressed }) => [
+              styles.textContainer,
+              { opacity: pressed ? 0.5 : 1 },
+            ]}
+          >
+            <Text style={styles.text}>Forgot password</Text>
+          </Pressable>
 
-            <Button
-              loading={isSubmitting}
-              onPress={handleSubmit(onSubmit)}
-              text="Login"
-            />
+          <Button
+            loading={isSubmitting}
+            onPress={handleSubmit(onSubmit)}
+            text="Login"
+          />
 
-            <Pressable
-              onPress={navigate}
-              style={({ pressed }) => [
-                { opacity: pressed ? 0.5 : 1 },
-                { padding: 4 },
-              ]}
-            >
-              <Text style={styles.createAccountText}>
-                Don’t have an account?{' '}
-                <Text style={styles.text}>Create Account</Text>
-              </Text>
-            </Pressable>
-          </VStack>
-        </Container>
-      </ScrollView>
-    </>
+          <Pressable
+            onPress={navigate}
+            style={({ pressed }) => [
+              { opacity: pressed ? 0.5 : 1 },
+              { padding: 4 },
+            ]}
+          >
+            <Text style={styles.createAccountText}>
+              Don’t have an account?{' '}
+              <Text style={styles.text}>Create Account</Text>
+            </Text>
+          </Pressable>
+        </VStack>
+      </Container>
+    </ScrollView>
   );
 };
 

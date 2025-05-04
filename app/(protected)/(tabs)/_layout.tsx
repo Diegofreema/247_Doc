@@ -27,7 +27,7 @@ export default function TabLayout() {
   const isIos = Platform.OS === 'ios';
   return (
     <>
-      <StatusBar style="light" backgroundColor={colors.textGreen} />
+      <StatusBar style="dark" />
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
